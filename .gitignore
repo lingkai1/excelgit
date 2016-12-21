@@ -3,6 +3,8 @@ Thumbs.db
 ehthumbs.db
 Desktop.ini
 *.xlsx
+*.doc
+*.docx
 # Python:
 *.py[cod]
 *.so
