@@ -7,15 +7,13 @@ Created on Mon Dec 26 11:27:26 2016
 from fontAndAlign import set_border
 def drawHead(ws1):
 
-    #设置开头表项
-################################
-################################
+#设置开头表项
 #第一行   
     ws1.merge_cells('A1:G1')
     set_border(ws1, 'A1:G1')
     ws1['A1']='线管绕制记录' 
 #ws1['A1'].font=font
-#    ws1['A1'].border=border
+#ws1['A1'].border=border
     #第二行
     ws1.merge_cells('A2:G2')    #日期
 #    ws1['A2'].border=border

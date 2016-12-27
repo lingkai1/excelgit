@@ -10,18 +10,17 @@ from openpyxl.styles import Border, Side, Font, Alignment
 from pandas import DataFrame
 from openpyxl import load_workbook
 from openpyxl import Workbook
-from openpyxl.utils.dataframe import dataframe_to_rows
+#from openpyxl.utils.dataframe import dataframe_to_rows
 from fontAndAlign import set_align
 from drawHead import drawHead
 from drawTail import drawTail
-
-
+from appendRowsViaDataFrame import appendRowsViaDataFrame
+#import numpy as np
 if len(sys.argv)>1:
-    fileName = sys.argv
+    fileName = sys.argv[1]
+    print sys.argv[1]
 else:
-    fileName = '20161204.xlsx'
-    
-
+    fileName = '20161205.xlsx'
 wb2 = load_workbook(fileName)
 print wb2.get_sheet_names()
 ws1 = wb2[u'20161204']
@@ -37,27 +36,62 @@ border = Border(left=Side(style='medium',color='FF000000'),right=Side(style='med
 fontObj2 = Font(size=9, italic=False)
 align = Alignment(horizontal='center', vertical='center', wrapText = True) 
 
+# new workBook
 wb = Workbook()
-ws1=wb.active
+ws = []
 
+group=[]
+j = 0
+flag = 0
+for i in df.iloc[:,2]:
+    if i == 1 and flag == 0:
+        group.append(j)
+        flag = 1
+    elif i != 1:
+        flag = 0
+    j = j+1                
+groupNum = len(group)    
 
-#表头
-drawHead(ws1)
+#split the dataframe
+groupInList = []
+
+if groupNum != 1: # Need to be split
+    for i in range(0,groupNum):
+        if i != groupNum-1:
+            groupInList.append(df.iloc[group[i]:group[i+1]])
+        else:
+            groupInList.append(df.iloc[group[i]:len(df)])
+else:
+    groupInList.append(df)
+#data process in each group
+j = 0
+for groupDf in groupInList:
+    if j ==0:
+        ws.append(wb.active)
+    else:
+        ws.append(wb.create_sheet("Sheet"))
+    drawHead(ws[j])
+    
+    
+    appendRowsViaDataFrame(ws[j], groupDf)
+              
+    drawTail(ws[j])  
+    ws[j].row_dimensions[ws[j].max_row-1].height = 25
+    ws[j].row_dimensions[6].height = 25
+    set_align(ws[j],'A1:'+'G'+str(ws[j].max_row),align,fontObj2,border)
+    j=j+1     
 
 ############# process data
-for r in dataframe_to_rows(df, index=False, header=False):
-    ws1.append(r)
-str()
-for cell in ws1['A']:
-    cell.style = 'Pandas'
+#for r in dataframe_to_rows(df, index=False, header=False):
+#    ws1.append(r)
+#str()
+#for cell in ws1['A']:
+#    cell.style = 'Pandas'
 ################    
 
 #表尾
-drawTail(ws1)
+#drawTail(ws1)
 
 #设置格式与对齐方式    
-ws1.row_dimensions[ws1.max_row-1].height = 25
-ws1.row_dimensions[6].height = 25
-set_align(ws1,'A2:'+'G'+str(ws1.max_row),align,fontObj2,border)   
-str(ws1.max_row)
-wb.save('new.xlsx')
+fileNameSave=fileName[:-5]
+wb.save(fileNameSave+'New'+'.xlsx')

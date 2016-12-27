@@ -5,7 +5,7 @@ Created on Mon Dec 26 11:38:06 2016
 @author: Link
 """
 def drawTail(ws1):
-    length = ws1.max_row
+    length = ws1.max_row+1
     ws1.merge_cells('A'+str(length)+':C'+str(length))
     ws1['A'+str(length)]='进入加强段圈数（圈）'
     ws1.merge_cells('D'+str(length)+':G'+str(length))
