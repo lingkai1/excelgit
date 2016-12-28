@@ -35,6 +35,6 @@ def drawTail(ws1):
     ws1.merge_cells('A'+str(length+4)+':B'+str(length+5))
     ws1['A'+str(length+4)]='备注'
     ws1.merge_cells('C'+str(length+4)+':G'+str(length+4))
-    ws1['C'+str(length+4)]='制导线生产厂家：江苏泰兴电工厂  □    ***       湖南华菱线缆股份有限公司 □   ***'              #导线总长度（米）
+    ws1['C'+str(length+4)]='制导线生产厂家：江苏泰兴电工厂  □              湖南华菱线缆股份有限公司 □      '              #导线总长度（米）
     ws1.merge_cells('C'+str(length+5)+':G'+str(length+5))
     ws1['C'+str(length+5)]='4圈=1米；加强段长度（米）=（总圈数-进入加强段圈数）/4'

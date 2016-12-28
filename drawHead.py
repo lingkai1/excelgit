@@ -16,6 +16,7 @@ def drawHead(ws1):
 #ws1['A1'].border=border
     #第二行
     ws1.merge_cells('A2:G2')    #日期
+    ws1['A2']='线盘编号：                                             20  年  月  日     '
 #    ws1['A2'].border=border
     #第三行
     ws1.merge_cells('A3:B3')
@@ -27,7 +28,7 @@ def drawHead(ws1):
     ws1['F3']                   #s温度 
     #第四行
     ws1.merge_cells('A4:B4')
-    ws1['A4']='线盘总质量(g)'
+    ws1['A4']='线盘总质量 (克)'
     ws1['C4']                   #输入总重量
     ws1.merge_cells('D4:E4')
     ws1.merge_cells('F4:G4')
@@ -39,7 +40,7 @@ def drawHead(ws1):
     ws1['C5']                   #输入
     ws1.merge_cells('D5:E5')
     ws1.merge_cells('F5:G5')
-    ws1['D5']='翼筒线管体编号（%）'
+    ws1['D5']='翼筒线管体编号'
     ws1['F5']                    #输入
     #第六行
     ws1.merge_cells('A6:B6')
@@ -47,7 +48,7 @@ def drawHead(ws1):
     ws1['C6']                   #输入
     ws1.merge_cells('D6:E6')
     ws1.merge_cells('F6:G6')
-    ws1['D6']='翼筒线管体重量（克）（%）'
+    ws1['D6']='翼筒线管体重量（克）'
     ws1['F6']                    #输入
     #第七行
     ws1.merge_cells('A7:A8')

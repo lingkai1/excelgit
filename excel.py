@@ -4,7 +4,6 @@ Created on Mon Dec 26 11:38:06 2016
 
 @author: Link
 """
-import sys
 from itertools import islice
 from openpyxl.styles import Border, Side, Font, Alignment
 from pandas import DataFrame
@@ -16,14 +15,16 @@ from drawHead import drawHead
 from drawTail import drawTail
 from appendRowsViaDataFrame import appendRowsViaDataFrame
 #import numpy as np
-if len(sys.argv)>1:
-    fileName = sys.argv[1]
-    print sys.argv[1]
-else:
-    fileName = '20161205.xlsx'
+#if len(sys.argv)>1:
+#    fileName = sys.argv[1]
+#    print sys.argv[1]
+#else:
+#    fileName = '20161205.xlsx'
+print u'请输入文件名或是将文件拖入窗口，按回车执行，会生成一个文件名+New.xlsx的文件'
+fileName = raw_input("") 
 wb2 = load_workbook(fileName)
 print wb2.get_sheet_names()
-ws1 = wb2[u'20161204']
+ws1 = wb2.active
 data = ws1.values
 cols = next(data)[1:]
 data = list(data)
@@ -32,8 +33,10 @@ data = (islice(r, 1, None) for r in data)
 df = DataFrame(data, index=idx, columns=cols)
 #df = DataFrame(data)
 #格式
+borderNone = Border()
 border = Border(left=Side(style='medium',color='FF000000'),right=Side(style='medium',color='FF000000'),top=Side(style='medium',color='FF000000'),bottom=Side(style='medium',color='FF000000'),diagonal=Side(style='medium',color='FF000000'),diagonal_direction=0,outline=Side(style='medium',color='FF000000'),vertical=Side(style='medium',color='FF000000'),horizontal=Side(style='medium',color='FF000000'))
 fontObj2 = Font(size=9, italic=False)
+fontObj3 = Font(size=14, italic=False, bold=True)
 align = Alignment(horizontal='center', vertical='center', wrapText = True) 
 
 # new workBook
@@ -77,21 +80,13 @@ for groupDf in groupInList:
               
     drawTail(ws[j])  
     ws[j].row_dimensions[ws[j].max_row-1].height = 25
-    ws[j].row_dimensions[6].height = 25
-    set_align(ws[j],'A1:'+'G'+str(ws[j].max_row),align,fontObj2,border)
-    j=j+1     
+    ws[j].row_dimensions[1].height = 18
+    set_align(ws[j],'A1:'+'G1',align,fontObj3,borderNone)
+    set_align(ws[j],'A2:'+'G2',align,fontObj2,borderNone)
+    set_align(ws[j],'A3:'+'G'+str(ws[j].max_row),align,fontObj2,border)
+    j=j+1 
 
-############# process data
-#for r in dataframe_to_rows(df, index=False, header=False):
-#    ws1.append(r)
-#str()
-#for cell in ws1['A']:
-#    cell.style = 'Pandas'
-################    
-
-#表尾
-#drawTail(ws1)
-
-#设置格式与对齐方式    
+#save file    
 fileNameSave=fileName[:-5]
 wb.save(fileNameSave+'New'+'.xlsx')
+print 'file has been created'
