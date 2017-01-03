@@ -20,9 +20,13 @@ from appendRowsViaDataFrame import appendRowsViaDataFrame
 #    print sys.argv[1]
 #else:
 #    fileName = '20161205.xlsx'
-print u'请输入文件名或是将文件拖入窗口，按回车执行，会生成一个文件名+New.xlsx的文件'
-fileName = raw_input("") 
+#print u'请输入文件名或是将文件拖入窗口，按回车执行，会生成一个文件名+New.xlsx的文件'
+#fileName = raw_input("") 
+#wb2 = load_workbook(fileName)
+fileName = '20170102.xlsx'
 wb2 = load_workbook(fileName)
+
+
 print wb2.get_sheet_names()
 ws1 = wb2.active
 data = ws1.values
@@ -45,13 +49,15 @@ ws = []
 
 group=[]
 j = 0
-flag = 0
+init = 1
+pastLayer = 0
 for i in df.iloc[:,2]:
-    if i == 1 and flag == 0:
+    if i < pastLayer  or init == 1: #本次层数小于上一次层数， 则标记为新一层的开始  或是初始状态
         group.append(j)
-        flag = 1
-    elif i != 1:
-        flag = 0
+        init = 0
+#    elif i != 1:
+#        newGruopflag = 0
+    pastLayer = i                         #更新上次层index                
     j = j+1                
 groupNum = len(group)    
 
