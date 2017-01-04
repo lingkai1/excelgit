@@ -20,11 +20,11 @@ from appendRowsViaDataFrame import appendRowsViaDataFrame
 #    print sys.argv[1]
 #else:
 #    fileName = '20161205.xlsx'
-#print u'请输入文件名或是将文件拖入窗口，按回车执行，会生成一个文件名+New.xlsx的文件'
-#fileName = raw_input("") 
-#wb2 = load_workbook(fileName)
-fileName = '20170102.xlsx'
+print u'请输入文件名或是将文件拖入窗口，按回车执行，会生成一个文件名+New.xlsx的文件'
+fileName = raw_input("") 
 wb2 = load_workbook(fileName)
+#fileName = '20170102.xlsx'
+#wb2 = load_workbook(fileName)
 
 
 print wb2.get_sheet_names()
